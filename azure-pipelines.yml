@@ -38,10 +38,11 @@ steps:
     command: 'build'
     projects: '**/*.csproj'
 
-- task: ArchiveFiles@2
+- task: AzureRmWebAppDeployment@4
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Free Trial (db4e8a91-7a1b-47d7-8b1f-95b73bf88f10)'
+    appType: 'webAppLinux'
+    WebAppName: 'auto-staffer'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'DOTNETCORE|1.1'
