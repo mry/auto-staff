@@ -42,6 +42,26 @@ namespace HMW.Api.Controllers
             dispatcher.Send(request);
         }
 
+        [HttpPut("/employee/{id}/availableforwork")]
+        public void AvailableForWork(string id)
+        {
+            dispatcher.Send(new SetAvailableForWork()
+            {
+                EmployeeId = id,
+                Available = true
+            });
+        }
+
+        [HttpPut("/employee/{id}/unavailableforwork")]
+        public void UnavailableForWork(string id)
+        {
+            dispatcher.Send(new SetAvailableForWork()
+            {
+                EmployeeId = id,
+                Available = false
+            });
+        }
+
         [HttpGet("/organization/{id}/employees")]
         public Task<IList<Employee>> GetEmployeesByOrganizationId(string id)
         {

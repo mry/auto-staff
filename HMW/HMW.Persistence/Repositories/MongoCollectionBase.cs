@@ -31,5 +31,10 @@ namespace HMW.Persistence.Repositories
         {
             collection.InsertOne(model);
         }
+
+        public void Update(T model)
+        {
+            collection.ReplaceOne((x => x.Id.Equals(model.Id)), model);
+        }
     }
 }

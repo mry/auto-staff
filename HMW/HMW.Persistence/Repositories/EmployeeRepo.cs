@@ -1,5 +1,6 @@
 ﻿using HMW.Core.Interfaces;
 using HMW.Core.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 
@@ -13,6 +14,12 @@ namespace HMW.Persistence.Repositories
         public IList<Employee> GetByOrganizationId(string id)
         {
             return collection.Find(x => x.OrganizationId.Equals(id)).ToList();
+        }
+
+        public void UpdateAvailableForWork(string id, bool available)
+        {
+            var update = Builders<Employee>.Update.Set(x => x.AvailableForWork, available);
+            collection.UpdateOne((x => x.Id.Equals(id)), update);
         }
     }
 }

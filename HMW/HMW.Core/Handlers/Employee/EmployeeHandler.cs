@@ -13,7 +13,8 @@ namespace HMW.Core.Handlers.Employee
 {
     public class EmployeeHandler : IRequestHandler<CreateEmployee>,
                                    IRequestHandler<GetEmployeeById, Models.Employee>,
-                                   IRequestHandler<GetEmployeesByOrganizationId, IList<Models.Employee>>
+                                   IRequestHandler<GetEmployeesByOrganizationId, IList<Models.Employee>>,
+                                   IRequestHandler<SetAvailableForWork>
     {
         private readonly IEmployeeRepo employeeRepo;
         private readonly IOrganizationRepo orgRepo;
@@ -59,6 +60,19 @@ namespace HMW.Core.Handlers.Employee
         public Task<IList<Models.Employee>> Handle(GetEmployeesByOrganizationId request, CancellationToken cancellationToken)
         {
             return Task.FromResult(employeeRepo.GetByOrganizationId(request.OrganizationId));
+        }
+
+        public Task<Unit> Handle(SetAvailableForWork request, CancellationToken cancellationToken)
+        {
+            var employee = employeeRepo.Get(request.EmployeeId);
+            if (employee == null)
+            {
+                throw new Exception("Employee not found");
+            }
+
+            employeeRepo.UpdateAvailableForWork(request.EmployeeId, request.Available);
+
+            return Task.FromResult(new Unit());
         }
     }
 }

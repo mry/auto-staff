@@ -9,6 +9,7 @@ namespace HMW.Core.Interfaces
         IList<Employee> GetByOrganizationId(string id);
         Employee Get(string id);
         void Save(Employee employee);
-
+        void Update(Employee employee);
+        void UpdateAvailableForWork(string id, bool available);
     }
 }
