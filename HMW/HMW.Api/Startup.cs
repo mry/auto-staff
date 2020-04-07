@@ -44,6 +44,8 @@ namespace HMW.Api
             services.AddScoped<IHealthReportRepo, HealthReportRepo>();
             services.AddScoped<ILocationRepo, LocationRepo>();
 
+
+
             // handlers
             //services.AddMediatR(typeof(EmployeeHandler));
             services.AddMediatR(typeof(EmployeeHandler).GetTypeInfo().Assembly);
