@@ -52,7 +52,7 @@ namespace HMW.Api.Controllers
         }
 
         [HttpPost("/employee/{id}/absence")]
-        public void SetAbsence(string id, CreateAbsenceNotification notification)
+        public void SetAbsence(string id, CreateAbsence notification)
         {
             dispatcher.Dispatch(notification);
         }
