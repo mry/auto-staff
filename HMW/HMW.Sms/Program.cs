@@ -21,8 +21,8 @@ namespace Sms
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://*:80");
-                    //.UseUrls("https://*:443");
+                    //.UseUrls("http://*:80");
+                    .UseUrls("https://*:443");
 
                 });
     }

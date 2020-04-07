@@ -90,15 +90,23 @@ namespace Sms.Controllers
         [Route("answer")]
         public String Post([FromForm]SMSPayload payload)
         {
+            string message = "Tack! Du är nu inbokad!";
 
             if (payload != null)
             {
-                return payload.message;
-                //return JsonSerializer.Serialize(payload).ToString();
+                if (payload.message.ToLower().Contains("ja"))
+                {
+
+                    return message;
+                    //return payload.message;
+                    //return JsonSerializer.Serialize(payload).ToString();
+                } else {
+                    return "Va synd, tack ändå!";
+                }
             }
             else
             {
-                return "Empty";
+                return "Va synd, tack ändå!";
             }
 
         }
