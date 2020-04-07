@@ -42,6 +42,7 @@ namespace HMW.Api
             services.AddScoped<IOrganizationRepo, OrganizationRepo>();
             services.AddScoped<IEmployeeRepo, EmployeeRepo>();
             services.AddScoped<IHealthReportRepo, HealthReportRepo>();
+            services.AddScoped<ILocationRepo, LocationRepo>();
 
             // handlers
             //services.AddMediatR(typeof(EmployeeHandler));
