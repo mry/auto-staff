@@ -30,14 +30,14 @@ namespace HMW.Api.Controllers
         [HttpGet("{id}")]
         public Task<Employee> Get(string id)
         {
-            return dispatcher.Send(new GetEmployeeByIdRequest()
+            return dispatcher.Send(new GetEmployeeById()
             {
                 Id = id
             });
         }
 
         [HttpPost]
-        public void Save(CreateEmployeeRequest request)
+        public void Save(CreateEmployee request)
         {
             dispatcher.Send(request);
         }
@@ -45,7 +45,7 @@ namespace HMW.Api.Controllers
         [HttpGet("/organization/{id}/employees")]
         public Task<IList<Employee>> GetEmployeesByOrganizationId(string id)
         {
-            return dispatcher.Send(new GetEmployeesByOrganizationIdRequest()
+            return dispatcher.Send(new GetEmployeesByOrganizationId()
             {
                 OrganizationId = id
             });

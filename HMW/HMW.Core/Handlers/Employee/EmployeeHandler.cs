@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace HMW.Core.Handlers.Employee
 {
-    public class EmployeeHandler : IRequestHandler<CreateEmployeeRequest>,
-                                   IRequestHandler<GetEmployeeByIdRequest, Models.Employee>,
-                                   IRequestHandler<GetEmployeesByOrganizationIdRequest, IList<Models.Employee>>
+    public class EmployeeHandler : IRequestHandler<CreateEmployee>,
+                                   IRequestHandler<GetEmployeeById, Models.Employee>,
+                                   IRequestHandler<GetEmployeesByOrganizationId, IList<Models.Employee>>
     {
         private readonly IEmployeeRepo employeeRepo;
         private readonly IOrganizationRepo orgRepo;
@@ -24,7 +24,7 @@ namespace HMW.Core.Handlers.Employee
             this.orgRepo = orgRepo;
         }
 
-        public Task<Unit> Handle(CreateEmployeeRequest request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(CreateEmployee request, CancellationToken cancellationToken)
         {
             // validate the organization exits
             if (string.IsNullOrEmpty(request?.OrganizationId))
@@ -51,12 +51,12 @@ namespace HMW.Core.Handlers.Employee
             return Task.FromResult(new Unit());
         }
 
-        public Task<Models.Employee> Handle(GetEmployeeByIdRequest request, CancellationToken cancellationToken)
+        public Task<Models.Employee> Handle(GetEmployeeById request, CancellationToken cancellationToken)
         {
             return Task.FromResult(employeeRepo.Get(request.Id));
         }
 
-        public Task<IList<Models.Employee>> Handle(GetEmployeesByOrganizationIdRequest request, CancellationToken cancellationToken)
+        public Task<IList<Models.Employee>> Handle(GetEmployeesByOrganizationId request, CancellationToken cancellationToken)
         {
             return Task.FromResult(employeeRepo.GetByOrganizationId(request.OrganizationId));
         }

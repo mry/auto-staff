@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HMW.Core;
 using HMW.Core.Interfaces;
 using HMW.Core.Models;
+using HMW.Core.Requests.Organization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,26 +15,31 @@ namespace HMW.Api.Controllers
     [Route("[controller]")]
     public class OrganizationController : ControllerBase
     {
-
         private readonly ILogger<OrganizationController> _logger;
-        private readonly IOrganizationRepo orgRepo;
+        private readonly IDispatcher dispatcher;
 
-        public OrganizationController(ILogger<OrganizationController> logger, IOrganizationRepo orgRepo)
+        public OrganizationController(ILogger<OrganizationController> logger,IDispatcher dispatcher)
         {
             _logger = logger;
-            this.orgRepo = orgRepo;
+            this.dispatcher = dispatcher;
         }
 
         [HttpGet]
-        public IEnumerable<Organization> Get()
+        public Task<IList<Organization>> Get()
         {
-            return orgRepo.GetAll();
+            return dispatcher.Send(new GetOrganizations());
         }
 
         [HttpPost]
-        public void Save(Organization organization)
+        public void Save(CreateOrganization request)
         {
-            orgRepo.Save(organization);
+            dispatcher.Dispatch(request);
+        }
+
+        [HttpPost("/organization/{id}/location")]
+        public void SaveLocation(CreateLocation request)
+        {
+            dispatcher.Dispatch(request);
         }
 
 

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace HMW.Core.Requests.Employee
 {
-    public class CreateEmployeeRequest : IRequest
+    public class CreateEmployee : IRequest
     {
         public string OrganizationId { get; set; }
         public string Firstname { get; set; }

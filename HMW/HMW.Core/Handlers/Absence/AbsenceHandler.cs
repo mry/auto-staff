@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace HMW.Core.Handlers.Absence
 {
-    class OrganizationAbsenceHandler : INotificationHandler<CreateAbsenceNotification>
+    class AbsenceHandler : INotificationHandler<CreateAbsenceNotification>
     {
         private readonly IOrganizationRepo organizationRepo;
         private readonly IEmployeeRepo employeeRepo;
 
-        public OrganizationAbsenceHandler(IOrganizationRepo organizationRepo, IEmployeeRepo employeeRepo)
+        public AbsenceHandler(IOrganizationRepo organizationRepo, IEmployeeRepo employeeRepo)
         {
             this.organizationRepo = organizationRepo;
             this.employeeRepo = employeeRepo;
@@ -33,6 +33,8 @@ namespace HMW.Core.Handlers.Absence
             {
                 throw new Exception("No organization found");
             }
+
+
 
             // TODO:
             // get HR-endpoint for this organization and send absence notification
