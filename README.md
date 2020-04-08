@@ -155,11 +155,3 @@ During the **HacktheCrisis** event, we have designed the basic concept and valid
 **Johan Nicklasson** Developer (API design, ux/ui, frontend/fullstack)
 **Marius Cotor** Developer (Developer, Backend, API .Net)
 **Nikolas Kartalidis** Developer (UI/UX specialist)
-
-# Team Contact details
-**Mattias Rylander** <mailto://mattias.rylander@gmail.com>, +46707863985
-**Berulv Tøndel** <mailto://berulv.tondel@comprend.com]>, +46761090528
-**Martin Koch** <mailto://martin.koch@mokan.tech>, +46761168937
-**Johan Nicklasson** <mailto://[nicklasson_johan@hotmail.com>
-**Marius Cotor** <mailto://cotor_m@yahoo.com>
-**Nikolas Kartalidis** <mailto://kartalidis@gmail.com>,+46704753804
