@@ -46,15 +46,26 @@ namespace Sms
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
+            app.UseSwagger(c =>
+            {
+                // url to json
+                c.RouteTemplate = "api-docs/{documentName}/swagger.json";
+            });
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SMS API V1");
+                // selectable endpoint in the UI
+                c.SwaggerEndpoint("/api-docs/v1/swagger.json", "API V1");
+                // Route to the Swagger UI
+                c.RoutePrefix = "api/sms/swagger";
             });
 
             app.UseHttpsRedirection();

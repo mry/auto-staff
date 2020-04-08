@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Sms.Controllers
 {
     [ApiController]
-    [Route("elks/hmw/sms")]
+    [Route("/api/sms")]
     public class SmsController : ControllerBase
     {
 
