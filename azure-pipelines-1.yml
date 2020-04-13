@@ -34,7 +34,10 @@ steps:
     publishWebProjects: false
     projects: '**/HMW.Api.csproj'
     zipAfterPublish: true
-    modifyOutputPath: true
+    modifyOutputPath: false
+    arguments: '-o $(Build.ArtifactStagingDirectory)'
+
+
 
 - task: PublishBuildArtifacts@1
   inputs:
