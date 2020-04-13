@@ -10,5 +10,7 @@ namespace HMW.Core.Interfaces
         IList<Organization> GetAll();
         Organization Get(string id);
         void Save(Organization organization);
+        void SaveLocation(string id, Location location);
+        void UpdateLocation(string id, Location location);
     }
 }

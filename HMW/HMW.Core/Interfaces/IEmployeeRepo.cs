@@ -11,5 +11,6 @@ namespace HMW.Core.Interfaces
         void Save(Employee employee);
         void Update(Employee employee);
         void UpdateAvailableForWork(string id, bool available);
+        IList<Employee> GetAvailableForWork(IList<string> organizationIds);
     }
 }

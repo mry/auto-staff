@@ -2,6 +2,7 @@ using HMW.Core;
 using HMW.Core.Config;
 using HMW.Core.Handlers.Employee;
 using HMW.Core.Interfaces;
+using HMW.Core.Validators;
 using HMW.Persistence.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -42,9 +43,10 @@ namespace HMW.Api
             services.AddScoped<IOrganizationRepo, OrganizationRepo>();
             services.AddScoped<IEmployeeRepo, EmployeeRepo>();
             services.AddScoped<IHealthReportRepo, HealthReportRepo>();
-            services.AddScoped<ILocationRepo, LocationRepo>();
+            services.AddScoped<IAvailableWorkRepo, AvailableWorkRepo>();
 
-
+            // validators
+            services.AddScoped<IAbsenceValidator, AbsenceValidator>();
 
             // handlers
             //services.AddMediatR(typeof(EmployeeHandler));

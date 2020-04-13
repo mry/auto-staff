@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using HMW.Core;
 using HMW.Core.Interfaces;
 using HMW.Core.Models;
-using HMW.Core.Notifications.Absence;
 using HMW.Core.Requests;
+using HMW.Core.Requests.Absence;
 using HMW.Core.Requests.Employee;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -72,9 +72,9 @@ namespace HMW.Api.Controllers
         }
 
         [HttpPost("/employee/{id}/absence")]
-        public void SetAbsence(string id, CreateAbsence notification)
+        public void SetAbsence(string id, CreateAbsence request)
         {
-            dispatcher.Dispatch(notification);
+            dispatcher.Send(request);
         }
 
     }

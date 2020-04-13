@@ -33,13 +33,19 @@ namespace HMW.Api.Controllers
         [HttpPost]
         public void Save(CreateOrganization request)
         {
-            dispatcher.Dispatch(request);
+            dispatcher.Send(request);
         }
 
         [HttpPost("/organization/{id}/location")]
         public void SaveLocation(CreateLocation request)
         {
-            dispatcher.Dispatch(request);
+            dispatcher.Send(request);
+        }
+
+        [HttpPut("/organization/{id}/location")]
+        public void UpdateLocation(UpdateLocation request)
+        {
+            dispatcher.Send(request);
         }
 
 

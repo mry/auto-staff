@@ -1,5 +1,7 @@
 ﻿using HMW.Core.Interfaces;
-using HMW.Core.Notifications.Absence;
+using HMW.Core.Notifications;
+using HMW.Core.Requests.Absence;
+using HMW.Core.Validators;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,58 +11,44 @@ using System.Threading.Tasks;
 
 namespace HMW.Core.Handlers.Absence
 {
-    class AbsenceHandler : INotificationHandler<CreateAbsence>
+    class AbsenceHandler : IRequestHandler<CreateAbsence>
     {
-        private readonly IOrganizationRepo organizationRepo;
-        private readonly IEmployeeRepo employeeRepo;
-        private readonly ILocationRepo locationRepo;
+        private readonly IAbsenceValidator absenceValidator;
         private readonly IDispatcher dispatcher;
 
-        public AbsenceHandler(IOrganizationRepo organizationRepo, IEmployeeRepo employeeRepo, ILocationRepo locationRepo, IDispatcher dispatcher)
+        public AbsenceHandler(IAbsenceValidator absenceValidator, IDispatcher dispatcher)
         {
-            this.organizationRepo = organizationRepo;
-            this.employeeRepo = employeeRepo;
-            this.locationRepo = locationRepo;
+            this.absenceValidator = absenceValidator;
             this.dispatcher = dispatcher;
         }
 
-        public Task Handle(CreateAbsence notification, CancellationToken cancellationToken)
+        public Task<Unit> Handle(CreateAbsence request, CancellationToken cancellationToken)
         {
-            var employee = employeeRepo.Get(notification.EmployeeId);
-            if (employee == null)
+            var result = absenceValidator.ValidateCreate(request);
+            if (!result.IsValid)
             {
-                throw new Exception("No employee found");
+                throw new Exception(result.Message);
             }
-
-            var org = organizationRepo.Get(employee.OrganizationId);
-            if (org == null)
-            {
-                throw new Exception("No organization found");
-            }
-
-            var location = locationRepo.Get(notification.LocationId);
-            if (location == null)
-            {
-                throw new Exception("No location found");
-            }
-
-            // spawn new AvailableWorkNotification
-            dispatcher.Dispatch(new AvailableWork()
-            {
-                EmployeeId = notification.EmployeeId,
-                EmployeeName = $"{employee.Firstname} {employee.Lastname}",
-                End = notification.End,
-                LocationId = notification.LocationId,
-                LocationName = location.Name,
-                Note = notification.Note,
-                OrganizationId = employee.OrganizationId,
-                Start = notification.Start
-            });
 
             // TODO:
-            // get HR-endpoint for this organization and send absence notification
+            // No need to persist Absence IMO.
+            // 1. Get HR-endpoint for this organization and send absence notification
+            // 2. Create and dispatch AvailableWork notification
 
-            return Task.FromResult(0);
+            // 3.
+            dispatcher.Dispatch(new AvailableWorkNotification()
+            {
+                EmployeeId = request.EmployeeId,
+                EmployeeName = $"{result.Employee.Firstname} {result.Employee.Lastname}",
+                End = request.End,
+                LocationId = request.LocationId,
+                LocationName = result.Location.Name,
+                Note = request.Note,
+                OrganizationId = result.Employee.OrganizationId,
+                Start = request.Start
+            });
+
+            return Task.FromResult(new Unit());
         }
     }
 }

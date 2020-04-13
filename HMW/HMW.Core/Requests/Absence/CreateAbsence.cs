@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HMW.Core.Notifications.Absence
+namespace HMW.Core.Requests.Absence
 {
-    public class CreateAbsence : INotification
+    public class CreateAbsence : IRequest
     {
         public string EmployeeId { get; set; }
         public DateTime Start { get; set; }

@@ -21,5 +21,10 @@ namespace HMW.Persistence.Repositories
             var update = Builders<Employee>.Update.Set(x => x.AvailableForWork, available);
             collection.UpdateOne((x => x.Id.Equals(id)), update);
         }
+
+        public IList<Employee> GetAvailableForWork(IList<string> organizationIds)
+        {
+            return collection.Find(x => x.AvailableForWork && organizationIds.Contains(x.OrganizationId)).ToList();
+        }
     }
 }
