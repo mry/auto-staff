@@ -31,11 +31,18 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
+    projects: '**/HMW.Api.csproj'
 
-- task: AzureWebApp@1
+
+##
+
+- task: AzureRmWebAppDeployment@4
   inputs:
-    azureSubscription: 'Free Trial (db4e8a91-7a1b-47d7-8b1f-95b73bf88f10)'
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pay-As-You-Go (4138b539-16e8-499e-910c-1779cd0002c4)'
     appType: 'webAppLinux'
-    appName: 'auto-staffer'
-    package: '$(build.artifactStagingDirectory)\WebApp.zip'
+    WebAppName: 'autostaffer-alpha'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'DOTNETCORE|3.0'
+
+
