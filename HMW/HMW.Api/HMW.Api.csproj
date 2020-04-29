@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HMW.AzureIntegration\HMW.AzureIntegration.csproj" />
     <ProjectReference Include="..\HMW.Core\HMW.Core.csproj" />
     <ProjectReference Include="..\HMW.Persistence\HMW.Persistence.csproj" />
   </ItemGroup>

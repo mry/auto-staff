@@ -11,5 +11,6 @@ namespace HMW.Core.Models
         public string Lastname { get; set; }
         public IEnumerable<Skill> Skills { get; set; }
         public bool AvailableForWork { get; set; }
+        public string MobilePhone { get; set; }
     }
 }

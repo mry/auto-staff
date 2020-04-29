@@ -1,3 +1,4 @@
+using HMW.AzureIntegration;
 using HMW.Core;
 using HMW.Core.Config;
 using HMW.Core.Handlers.Employee;
@@ -30,14 +31,23 @@ namespace HMW.Api
             // using UserSecrets to store db connection string
             // ie, in secrets.json add a row like this "DbConfig:ConnectionString" : "<value>"
             var dbConfig = Configuration.GetSection("DbConfig").Get<DbConfig>();
-            services.AddControllers();
-
-            services.AddTransient<IDispatcher, Dispatcher>();
-
+            var eventPublisherConfig = Configuration.GetSection("EventPublisherConfig").Get<EventPublisherConfig>();
             services.AddScoped<IDbConfig>((services) =>
             {
                 return dbConfig;
             });
+
+            services.AddScoped<IEventPublisherConfig>((services) =>
+            {
+                return eventPublisherConfig;
+            });
+
+
+            services.AddControllers();
+
+            services.AddTransient<IDispatcher, Dispatcher>();
+
+            
 
             // repos
             services.AddScoped<IOrganizationRepo, OrganizationRepo>();
@@ -51,6 +61,9 @@ namespace HMW.Api
             // handlers
             //services.AddMediatR(typeof(EmployeeHandler));
             services.AddMediatR(typeof(EmployeeHandler).GetTypeInfo().Assembly);
+
+            // azure event grid
+            services.AddScoped<IAvailableWorkPublisher, EventGridPublisher>();
 
             //swagger
             services.AddSwaggerGen((opt) =>

@@ -45,7 +45,8 @@ namespace HMW.Core.Handlers.Employee
                 Firstname = request.Firstname,
                 Lastname = request.Lastname,
                 OrganizationId = request.OrganizationId,
-                Skills = request.Skills
+                Skills = request.Skills,
+                MobilePhone = request.MobilePhone
             };
 
             employeeRepo.Save(employee);

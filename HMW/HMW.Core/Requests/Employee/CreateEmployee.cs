@@ -12,5 +12,6 @@ namespace HMW.Core.Requests.Employee
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public IEnumerable<Skill> Skills { get; set; }
+        public string MobilePhone { get; set; }
     }
 }

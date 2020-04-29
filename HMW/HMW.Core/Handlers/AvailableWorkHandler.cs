@@ -13,17 +13,18 @@ namespace HMW.Core.Handlers
     {
         private readonly IAvailableWorkRepo availableWorkRepo;
         private readonly IEmployeeRepo employeeRepo;
+        private readonly IAvailableWorkPublisher availableWorkPublisher;
 
-        public AvailableWorkHandler(IAvailableWorkRepo availableWorkRepo, IEmployeeRepo employeeRepo)
+        public AvailableWorkHandler(IAvailableWorkRepo availableWorkRepo, IEmployeeRepo employeeRepo, IAvailableWorkPublisher availableWorkPublisher)
         {
             this.availableWorkRepo = availableWorkRepo;
             this.employeeRepo = employeeRepo;
+            this.availableWorkPublisher = availableWorkPublisher;
         }
 
-         public Task Handle(AvailableWorkNotification notification, CancellationToken cancellationToken)
+         public async Task Handle(AvailableWorkNotification notification, CancellationToken cancellationToken)
         {
-            // save to repo
-            availableWorkRepo.Save(new AvailableWork()
+            var availableWork = new AvailableWork()
             {
                 AbsentEmployeeId = notification.EmployeeId,
                 Created = DateTime.Now,
@@ -34,12 +35,14 @@ namespace HMW.Core.Handlers
                 Note = notification.Note,
                 OrganizationId = notification.OrganizationId,
                 Start = notification.Start
-            });
+            };
 
-            // get available workers to notify
-            var workers = employeeRepo.GetAvailableForWork(new List<string>() { notification.OrganizationId });
+            // save to repo
+            availableWorkRepo.Save(availableWork);
 
-            return Task.FromResult(0);
+            // send to publisher
+            await availableWorkPublisher.PublishAsync(availableWork);
+
         }
     }
 }
